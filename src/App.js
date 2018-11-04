@@ -9,7 +9,7 @@ class ToDoList extends Component {
 
     constructor(props) {
         super(props);
-
+        props.test
         this.state = {
             items: ["valgyk", "gerk", "miegok"],
             inputValue: "",
@@ -37,27 +37,34 @@ class ToDoList extends Component {
         this.setState({inputValue: e.target.value})
     }
 
+    onRemoveItem = (item) => {
+        let items = [...this.state.items];
+        const index = items.indexOf(item);
+        items.splice(index, 1);
+        this.setState({items});
+    };
+
 
     render() {
-
         const {items, inputValue} = this.state;
 
         return (
-            <div>
+            <div className="App-header">
                 <h1>To do list:</h1>
-                <body> {
+                <div>{
+
                     items.map((item) => {
                         return (
-                            <li key={item.toString()}>
+                            <div className="List-item" key={item.toString()}>
                                 <div>
                                     {item}
                                 </div>
-                                <button>x</button>
-                            </li>
+                                <button onClick={() => this.onRemoveItem(item)}>x</button>
+                            </div>
                         )
                     })
                 }
-                </body>
+                </div>
                 <button onClick={(e) => {
                     this.addItem(e)
                 }}> Add to list:
